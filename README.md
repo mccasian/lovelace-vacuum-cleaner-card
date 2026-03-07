@@ -21,6 +21,31 @@ additional features, and much more flexible configuration, including a built-in 
 
 ## Installation
 
+Install using [HACS](https://hacs.xyz/) first:
+
+1. In HACS, open `...` -> `Custom repositories`.
+2. Add repository URL: `git@github.com:mccasian/lovelace-vacuum-cleaner-card.git`
+3. Select category/type: `Dashboard`.
+4. Install `Vacuum Cleaner Robot Card` from HACS.
+
+Then add this resource:
+
+UI:
+Settings -> Dashboards -> 3 dots on upper-right corner -> Resources -> Add Resource -> URL: 
+```/hacsfiles/lovelace-vacuum-cleaner-card/vacuum-cleaner-card.js?v=v1.0.0```
+
+YAML mode (to configuration.yaml)
+
+```yaml
+lovelace:
+  resources:
+    - url: /hacsfiles/lovelace-vacuum-cleaner-card/vacuum-cleaner-card.js
+      type: module
+```
+
+#
+_OR_ install manually:
+
 Manually add [vacuum-cleaner-card.js](https://raw.githubusercontent.com/mccasian/lovelace-vacuum-cleaner-card/master/vacuum-cleaner-card.js)
 to your `<config>/www/` folder and add the following to the `configuration.yaml` file:
 ```yaml
@@ -30,13 +55,6 @@ lovelace:
       type: module
 ```
 
-_OR_ install using [HACS](https://hacs.xyz/) and add this (if in YAML mode):
-```yaml
-lovelace:
-  resources:
-    - url: /hacsfiles/lovelace-vacuum-cleaner-card/vacuum-cleaner-card.js
-      type: module
-```
 
 The above configuration can be managed directly in the Configuration -> Lovelace Dashboards -> Resources panel when not using YAML mode,
 or added by clicking the "Add to lovelace" button on the HACS dashboard after installing the plugin.
