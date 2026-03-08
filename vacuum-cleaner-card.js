@@ -82,15 +82,16 @@
         trueFalse: v => (v === true ? 'Yes' : (v === false ? 'No' : '-')),
         divide100: v => Math.round(Number(v) / 100),
         secToHour: v => Math.floor(Number(v) / 60 / 60),
+        hour: v => Math.floor(Number(v)),
     }
 
     const vendors = {
         xiaomi: {
             attributes: {
-                main_brush: {compute: compute.secToHour},
-                side_brush: {compute: compute.secToHour},
-                filter: {compute: compute.secToHour},
-                sensor: {compute: compute.secToHour},
+                main_brush: {compute: compute.hour},
+                side_brush: {compute: compute.hour},
+                filter: {compute: compute.hour},
+                sensor: {compute: compute.hour},
             }
         },
         xiaomi_mi: {
@@ -100,6 +101,22 @@
                 filter: {key: 'hypa_hours'},
                 sensor: {
                     key: 'mop_hours',
+                    label: 'Mop: ',
+                },
+            },
+        },
+        viomi: {
+            state: {
+                status: {
+                    key: 'state',
+                },
+            },
+            attributes: {
+                main_brush: { key: 'viomi_vacuum.main_brush_hours' },
+                side_brush: { key: 'viomi_vacuum.side_brush_hours' },
+                filter: { key: 'viomi_vacuum.hypa_hours' },
+                sensor: {
+                    key: 'viomi_vacuum.mop_hours',
                     label: 'Mop: ',
                 },
             },
@@ -325,6 +342,7 @@
   font-size: 110%;
   padding-left: 10px;
   border-left: 2px solid var(--primary-color);
+    text-transform: capitalize;
 }
 .grid-right {
   text-align: right;
@@ -406,14 +424,23 @@
             const isValidSensorData = resolvedKey && `${this.config.sensorEntity}_${resolvedKey}` in this._hass.states;
             const isValidAttribute = resolvedKey && resolvedKey in this.stateObj.attributes;
             const isValidEntityData = resolvedKey && resolvedKey in this.stateObj;
+            const externalBattery = data
+                && data.key === 'battery_level'
+                && this.config.battery_entity
+                && this.config.battery_entity in this._hass.states;
 
-            const value = isValidSensorData
+            let value = isValidSensorData
                 ? computeFunc(this._hass.states[`${this.config.sensorEntity}_${resolvedKey}`].state) + (data.unit || '')
                 : isValidAttribute
                     ? computeFunc(this.stateObj.attributes[resolvedKey]) + (data.unit || '')
                     : isValidEntityData
                         ? computeFunc(this.stateObj[resolvedKey]) + (data.unit || '')
                         : null;
+
+            if (externalBattery) {
+                value = computeFunc(this._hass.states[this.config.battery_entity].state) + (data.unit || '');
+            }
+
             const attribute = html`<div>
                 ${data.icon && this.renderIcon(data)}
                 ${(data.label || '') + (value !== null ? value : this._hass.localize('state.default.unavailable'))}
@@ -500,6 +527,7 @@
                 name: config.name,
                 entity: config.entity,
                 sensorEntity: `sensor.${config.entity.split('.')[1]}`,
+                battery_entity: config.battery_entity,
                 commandIconRows,
                 commandIcons,
                 show: {
@@ -822,6 +850,9 @@
             const vacuumEntities = this.hass
                 ? Object.keys(this.hass.states).filter(entityId => entityId.startsWith('vacuum.'))
                 : [];
+            const sensorEntities = this.hass
+                ? Object.keys(this.hass.states).filter(entityId => entityId.startsWith('sensor.'))
+                : [];
             const currentEntity = this._config.entity || '';
             const selectedVendor = this._getSelectedVendor();
             const vendorOptions = this._getVendorOptions(selectedVendor);
@@ -863,6 +894,18 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="field">
+                                <label>External Battery Entity</label>
+                                <input
+                                  type="text"
+                                  list="sensor-entity-options"
+                                  .value=${this._config.battery_entity || ''}
+                                  @input=${e => this._updateConfig('battery_entity', e.target.value)}
+                                />
+                                <datalist id="sensor-entity-options">
+                                    ${sensorEntities.map(entityId => html`<option value=${entityId}></option>`)}
+                                </datalist>
+                            </div>
                             <div class="field">
                                 <label>Standard Buttons Row</label>
                                 <div class="check">
