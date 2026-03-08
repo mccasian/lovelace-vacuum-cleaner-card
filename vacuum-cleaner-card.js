@@ -82,15 +82,16 @@
         trueFalse: v => (v === true ? 'Yes' : (v === false ? 'No' : '-')),
         divide100: v => Math.round(Number(v) / 100),
         secToHour: v => Math.floor(Number(v) / 60 / 60),
+        hour: v => Math.floor(Number(v)),
     }
 
     const vendors = {
         xiaomi: {
             attributes: {
-                main_brush: {compute: compute.secToHour},
-                side_brush: {compute: compute.secToHour},
-                filter: {compute: compute.secToHour},
-                sensor: {compute: compute.secToHour},
+                main_brush: {compute: compute.hour},
+                side_brush: {compute: compute.hour},
+                filter: {compute: compute.hour},
+                sensor: {compute: compute.hour},
             }
         },
         xiaomi_mi: {
@@ -325,6 +326,7 @@
   font-size: 110%;
   padding-left: 10px;
   border-left: 2px solid var(--primary-color);
+    text-transform: capitalize;
 }
 .grid-right {
   text-align: right;
