@@ -105,6 +105,22 @@
                 },
             },
         },
+        viomi: {
+            state: {
+                status: {
+                    key: 'state',
+                },
+            },
+            attributes: {
+                main_brush: { key: 'viomi_vacuum.main_brush_hours' },
+                side_brush: { key: 'viomi_vacuum.side_brush_hours' },
+                filter: { key: 'viomi_vacuum.hypa_hours' },
+                sensor: {
+                    key: 'viomi_vacuum.mop_hours',
+                    label: 'Mop: ',
+                },
+            },
+        },
         valetudo: {
             state: {
                 status: {key: 'state'},
