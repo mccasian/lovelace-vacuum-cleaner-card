@@ -1,7 +1,6 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-
 ## 1.1.0
 
 - Add `battery_entity` support to allow sourcing battery state from an external sensor (falls back to existing vacuum attributes/state when not set).

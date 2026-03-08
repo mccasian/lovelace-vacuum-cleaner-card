@@ -32,7 +32,7 @@ Then add this resource:
 
 UI:
 Settings -> Dashboards -> 3 dots on upper-right corner -> Resources -> Add Resource -> URL: 
-```/hacsfiles/lovelace-vacuum-cleaner-card/vacuum-cleaner-card.js?v=v1.0.0```
+```/hacsfiles/lovelace-vacuum-cleaner-card/vacuum-cleaner-card.js?v=v1.1.0```
 
 YAML mode (to configuration.yaml)
 
@@ -51,7 +51,7 @@ to your `<config>/www/` folder and add the following to the `configuration.yaml`
 ```yaml
 lovelace:
   resources:
-    - url: /local/vacuum-cleaner-card.js?v=v1.0.0
+    - url: /local/vacuum-cleaner-card.js?v=v1.1.0
       type: module
 ```
 

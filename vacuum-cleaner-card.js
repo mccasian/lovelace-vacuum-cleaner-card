@@ -1,6 +1,6 @@
 ((LitElement) => {
     console.info(
-        '%c vacuum-cleaner-CARD %c v1.0.0 ',
+        '%c vacuum-cleaner-CARD %c v1.1.0 ',
         'color: cyan; background: black; font-weight: bold;',
         'color: darkblue; background: white; font-weight: bold;',
     );
