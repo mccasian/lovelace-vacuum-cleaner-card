@@ -72,6 +72,7 @@ You can still provide your own path with `image`, or disable image background en
 | type | string | **Required** | `custom:vacuum-cleaner-card`
 | entity | string | **Required** | `vacuum.my_robot_vacuum`
 | name | string/bool | `friendly_name` | Override friendly name (set to `false` to hide)
+| battery_entity | string | optional | Use an external sensor entity for battery state (i.e. `sensor.my_vacuum_battery`)
 | image | string/bool | auto fallback | Custom background image path (i.e. `/local/img/vacuum.png`). Set `false` to disable background image.
 | state | [Entity Data](#entity-data) | *(see below)* | Set to `false` to hide all states
 | attributes | [Entity Data](#entity-data) | *(see below)* | Set to `false` to hide all attributes
@@ -240,6 +241,15 @@ Show default clean spot button:
     spot:
       show: true
 ```
+
+Use external battery sensor:
+```yaml
+- type: custom:vacuum-cleaner-card
+  entity: vacuum.my_robot_vacuum
+  battery_entity: sensor.my_robot_vacuum_battery
+```
+
+Note: many newer integrations expose vacuum battery as a sensor entity instead of a vacuum attribute.
 
 Add custom attributes:
 ```yaml
