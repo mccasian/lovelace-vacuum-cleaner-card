@@ -1,7 +1,7 @@
 {
   "vacuum-cleaner-card": {
     "updated_at": "2026-03-07",
-    "version": "v1.0.0",
+    "version": "v1.1.0",
     "remote_location": "https://raw.githubusercontent.com/mccasian/lovelace-vacuum-cleaner-card/master/vacuum-cleaner-card.js",
     "visit_repo": "https://github.com/mccasian/lovelace-vacuum-cleaner-card",
     "changelog": "https://github.com/mccasian/lovelace-vacuum-cleaner-card/blob/master/CHANGELOG.md"
